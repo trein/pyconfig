@@ -10,13 +10,13 @@ PYTHON_BIN_LOCATION = '/usr/bin/python%s'
 
 
 class Installer(object):
-    def disable_env(self):
-        logger.info('Disabling virtualenv at %s' % VIRTUALENV_DIR)
-        os.system('source %s/bin/deactivate' % VIRTUALENV_DIR)
+    # def disable_env(self):
+    #     logger.info('Disabling virtualenv at %s' % VIRTUALENV_DIR)
+    #     os.system('deactivate')
 
-    def enable_env(self):
-        logger.info('Enabling virtualenv at %s' % VIRTUALENV_DIR)
-        os.system('source %s/bin/activate' % VIRTUALENV_DIR)
+    # def enable_env(self):
+    #     logger.info('Enabling virtualenv at %s' % VIRTUALENV_DIR)
+    #     os.system('source %s/bin/activate' % VIRTUALENV_DIR)
 
     def setup_env(self, python_version):
         logger.info('Setting up virtualenv at %s' % VIRTUALENV_DIR)
@@ -27,18 +27,19 @@ class Installer(object):
         logger.info('Cleaning virtualenv at %s' % VIRTUALENV_DIR)
         os.system('rm -r %s' % VIRTUALENV_DIR)
 
-    def is_dependency_satisfied(self, name, version):
-        import pkg_resources
-        try:
-            pkg_resources.require(['%s%s' % (name, version)])
-        except pkg_resources.DistributionNotFound, pkg_resources.VersionConflict:
-            logger.info('Dependency (%s%s) not installed' % (name, version))
-            return False
-        return True
+    # def is_dependency_satisfied(self, name, version):
+    #     import pkg_resources
+    #     try:
+    #         pkg_resources.require(['%s%s' % (name, version)])
+    #     except pkg_resources.DistributionNotFound, pkg_resources.VersionConflict:
+    #         logger.info('Dependency (%s%s) not installed' % (name, version))
+    #         return False
+    #     return True
 
     def install_dependency(self, name, version):
-        if not self.is_dependency_satisfied(name, version):
-            os.system('pip install %s%s' % (name, version))
+        # if not self.is_dependency_satisfied(name, version):
+        logger.info('Installing dependency (%s%s)' % (name, version))
+        os.system('%s/bin/pip install %s%s' % (VIRTUALENV_DIR, name, version))
 
 
 DEPENDENCIES_KEY = 'dependencies'
@@ -51,7 +52,7 @@ class DependencyDescriptor(object):
         self.descriptor = descriptor
 
     def python_version(self):
-        return self.descriptor.get()
+        return self.descriptor.get('python_version')
 
     def has_dev_dependency(self):
         return DEPENDENCIES_DEV_KEY in self.dependencies()

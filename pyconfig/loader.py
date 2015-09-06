@@ -14,6 +14,9 @@ def setup_project(args):
     if args.mode == 'clean':
         workflow.CleanWorkflow().do()
         return
+    if args.mode == 'setup':
+        workflow.SetupWorkflow(descriptor).do()
+        return
     if args.mode == 'release':
         workflow.ProdDependencyWorkflow(args, descriptor).do()
         return

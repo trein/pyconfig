@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup
 
 
 setup(name='pyconfig',
@@ -12,4 +12,5 @@ setup(name='pyconfig',
       license='Apache License 2.0',
       long_description=open('README.md').read(),
       platforms='all',
+      install_requires=['virtualenv==13.1.2'],
       packages=['pyconfig'])
