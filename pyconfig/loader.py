@@ -12,16 +12,16 @@ def setup_project(args):
     descriptor = read_project_descriptor()
     logger.info('Executing %s workflow' % args.mode)
     if args.mode == 'clean':
-        workflow.CleanWorkflow(args).do()
+        workflow.clean_workflow(args).do()
         return
     if args.mode == 'setup':
-        workflow.SetupWorkflow(args, descriptor).do()
+        workflow.setup_workflow(args, descriptor).do()
         return
     if args.mode == 'release':
-        workflow.ProdDependencyWorkflow(args, descriptor).do()
+        workflow.production_workflow(args, descriptor).do()
         return
     if args.mode == 'develop':
-        workflow.DevDependencyWorkflow(args, descriptor).do()
+        workflow.development_workflow(args, descriptor).do()
         return
 
 
