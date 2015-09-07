@@ -6,6 +6,7 @@ import loader
 def main():
     parser = argparse.ArgumentParser(description='Python project workflow management')
     parser.add_argument('-v', '--verbose', dest='verbose', action='store_true', default=False, help='verbose output (default false)')
+    parser.add_argument('-e', '--env', dest='env_dir', default='.env', help='virtualenv directory (default .env)')
     parser.add_argument('mode', default='release', help='lifecycle step (default release)')
     args = parser.parse_args()
 

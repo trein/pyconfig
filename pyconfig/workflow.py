@@ -11,24 +11,28 @@ class Workflow(object):
 
 
 class CleanWorkflow(Workflow):
+    def __init__(self, args):
+        self.args = args
+
     def do(self):
         installer = environment.Installer()
-        installer.clean_env()
+        installer.clean_env(self.args.env_dir)
 
 
 class SetupWorkflow(Workflow):
-    def __init__(self, descriptor):
+    def __init__(self, args, descriptor):
         self.project_descriptor = environment.DependencyDescriptor(descriptor)
         self.installer = environment.Installer()
+        self.args = args
 
     def do(self):
         python_version = self.project_descriptor.python_version()
-        self.installer.setup_env(python_version)
+        self.installer.setup_env(python_version, self.args.env_dir)
 
 
-class ProdDependencyWorkflow(Workflow):
+class ProdDependencyWorkflow(SetupWorkflow):
     def __init__(self, args, descriptor):
-        super(ProdDependencyWorkflow, self).__init__()
+        super(ProdDependencyWorkflow, self).__init__(args, descriptor)
         self.args = args
         self.project_descriptor = environment.DependencyDescriptor(descriptor)
         self.installer = environment.Installer()
@@ -39,6 +43,7 @@ class ProdDependencyWorkflow(Workflow):
             self.installer.install_dependency(dep_name, dep_version)
 
     def do(self):
+        super(ProdDependencyWorkflow, self).do()
         self._install_prod_dependencies()
 
 
