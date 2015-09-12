@@ -1,0 +1,9 @@
+# pyconfig
+Simplified project and dependency management for Python.
+
+## Installation
+```
+git clone https://github.com/trein/pyconfig
+cd pyconfig
+python setup.py install
+```
