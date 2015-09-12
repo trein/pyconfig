@@ -11,6 +11,7 @@ PROJECT_DESCRIPTOR_NAME = 'project.json'
 def setup_project(args):
     descriptor = read_project_descriptor()
     logger.info('Executing %s workflow' % args.mode)
+
     if args.mode == 'clean':
         workflow.clean_workflow(args).do()
         return
@@ -23,6 +24,9 @@ def setup_project(args):
     if args.mode == 'develop':
         workflow.development_workflow(args, descriptor).do()
         return
+
+    logger.error('Please, specify configuration workflow to be executed')
+    exit('Terminated')
 
 
 def read_project_descriptor():

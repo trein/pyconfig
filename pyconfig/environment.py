@@ -7,6 +7,7 @@ logger = logging.getLogger(__name__)
 
 PYTHON_BIN_LOCATION = '/usr/bin/python%s'
 
+
 class InstallException(Exception):
     pass
 
@@ -32,7 +33,10 @@ class Installer(object):
 
     def clean_env(self, virtualenv_dir):
         logger.info('Cleaning virtualenv at %s' % virtualenv_dir)
-        os.system('rm -r %s' % virtualenv_dir)
+        if not os.path.exists(virtualenv_dir):
+            logger.warn('Virtualenv does not exist')
+        else:
+            os.system('rm -r %s' % virtualenv_dir)
 
     def is_dependency_satisfied(self, name, version):
         import pkg_resources
